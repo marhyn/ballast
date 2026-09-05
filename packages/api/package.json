@@ -1,0 +1,25 @@
+{
+  "name": "@ballast/api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@orpc/server": "^1.0.0",
+    "zod": "^3.24.0",
+    "drizzle-orm": "^0.45.2",
+    "@ballast/db": "workspace:*",
+    "@ballast/auth": "workspace:*",
+    "@ballast/billing": "workspace:*"
+  },
+  "devDependencies": {
+    "@ballast/config": "workspace:*",
+    "typescript": "^5.7.0",
+    "@types/node": "^22.10.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

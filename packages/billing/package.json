@@ -1,0 +1,21 @@
+{
+  "name": "@ballast/billing",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@polar-sh/sdk": "^0.30.0",
+    "stripe": "^18.0.0"
+  },
+  "devDependencies": {
+    "@ballast/config": "workspace:*",
+    "typescript": "^5.7.0",
+    "@types/node": "^22.10.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

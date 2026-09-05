@@ -1,0 +1,24 @@
+{
+  "name": "@ballast/auth",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "auth:generate": "npx auth@latest generate --config ./src/index.ts --output ../db/src/schema/auth.ts -y",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "better-auth": "^1.3.0",
+    "@better-auth/drizzle-adapter": "^1.3.0",
+    "lettr": "^1.0.0",
+    "@ballast/db": "workspace:*"
+  },
+  "devDependencies": {
+    "@ballast/config": "workspace:*",
+    "typescript": "^5.7.0",
+    "@types/node": "^22.10.0"
+  }
+}
