@@ -11,3 +11,7 @@ Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `
 ### Domain docs
 
 Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
+
+### Page design
+
+New pages get designed on a Claude Design canvas and approved before any code is written. See `.claude/skills/design-a-page/SKILL.md`.
