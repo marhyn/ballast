@@ -1,0 +1,3 @@
+# Lettr for transactional email, over Resend/Postmark
+
+Chosen over Resend (the more common default in the current TS/Nuxt SaaS-starter ecosystem) and Postmark. Lettr sends over both a REST API and an SMTP relay, tracks delivery/open/click state per individual email rather than aggregated daily counts, ships a first-party Node.js SDK, and gives non-engineers a visual template editor with draft/publish versioning — useful for the verification, password-reset, and organization-invitation emails better-auth needs to send. Called directly from `packages/auth`'s email hooks with no separate provider abstraction — unlike billing (ADR-0002), only one provider is expected here.
