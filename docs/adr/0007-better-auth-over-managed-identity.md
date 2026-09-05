@@ -1,0 +1,3 @@
+# better-auth over managed identity providers and over Auth.js
+
+We chose better-auth — self-hosted, TypeScript-first, with a first-party Drizzle adapter and an `organization` plugin that directly models our multi-org tenancy (ADR-0003) — over managed providers like Clerk/Auth0/WorkOS (faster to wire up, but per-seat/MAU pricing and the user database lives outside our own Postgres) and over Auth.js (mature, but no built-in organization/multi-tenancy model — we'd have to build that ourselves anyway). The trade-off is more of our own code to maintain for something security-critical, in exchange for full data ownership, no per-user billing on the auth layer itself, and tenancy modeled exactly the way this scaffold needs it.
