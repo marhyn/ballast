@@ -1,0 +1,3 @@
+# Polar as the default billing provider, Stripe as a swappable fallback
+
+Billing sits behind a `BillingProvider` interface in `packages/billing` so the concrete provider is an implementation detail, not an architectural commitment. We default to Polar because it acts as Merchant of Record and absorbs global VAT/sales-tax compliance, which is the better default for a general-purpose scaffold than a US-only product; Stripe remains available behind the same interface for apps that need Connect/marketplace features or are US-only. Only one provider is active at a time — mixed per-organization billing providers are out of scope.

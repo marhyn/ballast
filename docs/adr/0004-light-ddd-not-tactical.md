@@ -1,0 +1,3 @@
+# Light domain/router/db layering, not tactical DDD
+
+`packages/api` organizes code by domain folder (`domain/<x>.service.ts` → `router/<x>.router.ts`) rather than by technical layer, but stops short of tactical DDD — no aggregates, value objects, domain events, or repository interfaces; services call `@ballast/db` directly. Full tactical DDD's ceremony (a repository interface plus implementation per entity, event bus wiring) fights a "clone and ship" scaffold's actual goal. A specific domain can still grow into fuller DDD later if it earns it (e.g. billing reconciliation), without forcing the pattern everywhere from day one.
