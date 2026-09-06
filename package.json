@@ -1,6 +1,7 @@
 {
   "name": "ballast",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@10.30.3",
   "engines": {
     "node": ">=22"
@@ -8,15 +9,18 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "lint": "turbo run lint",
+    "lint": "oxlint .",
     "typecheck": "turbo run typecheck",
+    "test": "vitest run",
     "db:generate": "pnpm --filter @ballast/db db:generate",
     "db:migrate": "pnpm --filter @ballast/db db:migrate",
     "db:studio": "pnpm --filter @ballast/db db:studio",
     "auth:generate": "pnpm --filter @ballast/auth auth:generate"
   },
   "devDependencies": {
+    "oxlint": "^1.81.0",
     "turbo": "^2.5.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.11"
   }
 }
