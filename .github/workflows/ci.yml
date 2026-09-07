@@ -8,6 +8,22 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ballast
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/ballast
     steps:
       - uses: actions/checkout@v4
 
@@ -22,8 +38,9 @@ jobs:
 
       - run: pnpm lint
       - run: pnpm typecheck
+      - run: pnpm db:migrate
       - run: pnpm test
 
-  # Playwright e2e is deliberately not wired up yet — there are no pages to
-  # test against (see docs/agents/ and README "Getting started"). Add a job
-  # here once apps/web has its first real page.
+  # Playwright e2e is still not wired up. apps/web does have a real page now
+  # (/example) to test against, but building that job is its own piece of
+  # work — add it deliberately, not as a drive-by here.

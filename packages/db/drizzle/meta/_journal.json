@@ -8,6 +8,13 @@
       "when": 1788677338044,
       "tag": "0000_slimy_invaders",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788802862195,
+      "tag": "0001_slimy_mongoose",
+      "breakpoints": true
     }
   ]
 }
