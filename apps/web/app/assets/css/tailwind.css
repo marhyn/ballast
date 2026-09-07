@@ -1,4 +1,7 @@
 
+/* Intentionally Work Sans, not one of shadcn-vue's font presets — components.json's
+   "font": "geist-sans" is stale metadata `shadcn-vue add` may try to re-apply;
+   re-check this import after running it. */
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";

@@ -2,7 +2,7 @@
 // TEMPLATE EXAMPLE — see packages/db/src/schema/example.ts. Safe to delete.
 import { orpc } from "~/lib/orpc";
 
-definePageMeta({ middleware: "organization" });
+definePageMeta({ middleware: "organization", layout: "app" });
 
 type Note = Awaited<ReturnType<typeof orpc.example.list>>[number];
 
