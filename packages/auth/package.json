@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@ballast/db": "workspace:*",
-    "@better-auth/drizzle-adapter": "^1.3.0",
-    "better-auth": "^1.3.0",
+    "@better-auth/drizzle-adapter": "^1.7.3",
+    "better-auth": "^1.7.3",
     "lettr": "^1.0.0"
   },
   "devDependencies": {

@@ -18,8 +18,8 @@ describe("example domain service", () => {
 
   beforeAll(async () => {
     await db.insert(organization).values([
-      { id: orgA, name: "Org A", slug: `org-a-${orgA}` },
-      { id: orgB, name: "Org B", slug: `org-b-${orgB}` },
+      { id: orgA, name: "Org A", slug: `org-a-${orgA}`, createdAt: new Date() },
+      { id: orgB, name: "Org B", slug: `org-b-${orgB}`, createdAt: new Date() },
     ]);
   });
 
