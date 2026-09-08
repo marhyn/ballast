@@ -3,7 +3,20 @@ import { eq, inArray } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { db } from "@ballast/db";
 import { organization, user, member, subscription } from "@ballast/db/schema";
+import { plans } from "@ballast/billing/plans";
 import { listOrganizations, listUsers, listSubscriptions } from "./admin.service";
+
+// Resolved from the real plan list rather than hardcoded, so a plan rename
+// doesn't silently break this fixture (caught for real bootstrapping the
+// ecomail-clone test product off this template — see marhyn/ballast#2).
+// Split into separate consts (not just narrowed on `paidPlan`) because TS's
+// null narrowing doesn't carry into the closures below.
+const paidPlan = plans.find((plan) => plan.priceIds !== null);
+if (!paidPlan?.priceIds) {
+  throw new Error("Expected at least one checkout-eligible plan in packages/billing/src/plans.ts");
+}
+const paidPlanId = paidPlan.id;
+const paidPlanPriceId = paidPlan.priceIds.polar;
 
 describe("admin domain service", () => {
   const orgId = randomUUID();
@@ -28,7 +41,7 @@ describe("admin domain service", () => {
       providerCustomerId: "cus_admin_test",
       providerSubscriptionId: `polar_sub_admin_test_${subscriptionId}`,
       status: "active",
-      priceId: "REPLACE_WITH_POLAR_PRO_PRICE_ID",
+      priceId: paidPlanPriceId,
       currentPeriodEnd: new Date(),
     });
   });
@@ -45,7 +58,7 @@ describe("admin domain service", () => {
     const org = orgs.find((o) => o.id === orgId);
     expect(org).toBeDefined();
     expect(org?.memberCount).toBe(2);
-    expect(org?.planId).toBe("pro");
+    expect(org?.planId).toBe(paidPlanId);
     expect(org?.subscriptionStatus).toBe("active");
   });
 
@@ -61,6 +74,6 @@ describe("admin domain service", () => {
     const subscriptions = await listSubscriptions(db);
     const sub = subscriptions.find((s) => s.id === subscriptionId);
     expect(sub?.organizationName).toBe("Admin Test Org");
-    expect(sub?.planId).toBe("pro");
+    expect(sub?.planId).toBe(paidPlanId);
   });
 });

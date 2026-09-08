@@ -54,10 +54,22 @@ them into one "rename everything" pass.
 
 **Display name** (cheap — just do it): the name a user or operator actually sees.
 `CONTEXT.md`'s title, `README.md`, `docker-compose.yml`'s `POSTGRES_DB` and volume name,
-`.env.example`'s `DATABASE_URL` database name, the root `package.json` `name` field, and
-the brand text in `apps/web/app/layouts/app.vue`'s header
-(`<NuxtLink to="/">Ballast</NuxtLink>`). Grep for `Ballast`/`ballast` fresh before editing
-— this list can go stale as the app grows; don't trust it blindly.
+`.env.example`'s `DATABASE_URL` database name, the root `package.json` `name` field, the
+brand text in `apps/web/app/layouts/app.vue`'s header
+(`<NuxtLink to="/">Ballast</NuxtLink>`) — and, easy to miss, every centered-card auth page
+(sign-in, sign-up, forgot/reset-password, onboarding, accept-invitation) repeats that
+brand text in its own logo `<div>` rather than sharing `layouts/app.vue`'s header, since
+they render before a session exists. The admin page's subtitle and the invitation email's
+HTML (`packages/auth/src/email.ts`) say it too. Actually `grep -ri ballast` fresh across
+the repo before you stop — this list is exactly the kind that goes stale as the app
+grows, and it already has once (see marhyn/ballast#2's first bootstrap run, which missed
+all of the above on the first pass and had to go back for them).
+
+Running more than one Ballast-derived project locally at once (this template plus a
+project bootstrapped from it, say)? `docker-compose.yml`'s host port (`5432`) and Nuxt's
+dev-server port (`3000`, via `PORT` in `.env`) will collide across projects if both run
+their stacks at the same time — reassign one side's ports (and `APP_URL`/
+`BETTER_AUTH_URL` to match) rather than discovering it as a mysterious bind failure.
 
 **Internal package scope** (`@ballast/api`, `@ballast/db`, `@ballast/billing`, ...):
 optional — offer it, but default to *skip*. These are private, unpublished workspace

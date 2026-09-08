@@ -4,7 +4,20 @@ import { Webhook } from "standardwebhooks";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { db } from "@ballast/db";
 import { organization, subscription } from "@ballast/db/schema";
+import { plans } from "@ballast/billing/plans";
 import { getCurrentPlan, handleBillingWebhook } from "./billing.service";
+
+// Resolved from the real plan list rather than hardcoded, so a plan rename
+// doesn't silently break this fixture (caught for real bootstrapping the
+// ecomail-clone test product off this template — see marhyn/ballast#2).
+// Split into separate consts (not just narrowed on `paidPlan`) because TS's
+// null narrowing doesn't carry into the `it()` closures below.
+const paidPlan = plans.find((plan) => plan.priceIds !== null);
+if (!paidPlan?.priceIds) {
+  throw new Error("Expected at least one checkout-eligible plan in packages/billing/src/plans.ts");
+}
+const paidPlanId = paidPlan.id;
+const paidPlanPriceId = paidPlan.priceIds.polar;
 
 function signedHeaders(webhook: Webhook, msgId: string, payload: string) {
   const timestamp = new Date();
@@ -145,7 +158,7 @@ describe("billing domain service", () => {
       type: "subscription.created",
       id: providerSubscriptionId,
       customerId,
-      priceId: "REPLACE_WITH_POLAR_PRO_PRICE_ID", // matches the Pro plan in packages/billing/src/plans.ts
+      priceId: paidPlanPriceId,
       status: "active",
       currentPeriodEnd: new Date().toISOString(),
       organizationId: orgId,
@@ -154,7 +167,7 @@ describe("billing domain service", () => {
 
     const afterCreate = await getCurrentPlan(db, orgId);
     expect(afterCreate.subscription?.status).toBe("active");
-    expect(afterCreate.planId).toBe("pro");
+    expect(afterCreate.planId).toBe(paidPlanId);
 
     // A later event for the same provider subscription id upserts in place,
     // even without organizationId in its metadata (matched by providerSubscriptionId).
@@ -162,7 +175,7 @@ describe("billing domain service", () => {
       type: "subscription.updated",
       id: providerSubscriptionId,
       customerId,
-      priceId: "REPLACE_WITH_POLAR_PRO_PRICE_ID",
+      priceId: paidPlanPriceId,
       status: "past_due",
       currentPeriodEnd: new Date().toISOString(),
     });
@@ -179,7 +192,7 @@ describe("billing domain service", () => {
       type: "subscription.created",
       id: randomUUID(),
       customerId: randomUUID(),
-      priceId: "REPLACE_WITH_POLAR_PRO_PRICE_ID",
+      priceId: paidPlanPriceId,
       status: "active",
       currentPeriodEnd: new Date().toISOString(),
     });
