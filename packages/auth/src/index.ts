@@ -15,6 +15,21 @@ export const auth = betterAuth({
     schema,
   }),
 
+  // Platform-wide oversight access (see docs/adr/0011-platform-admin-flag.md) —
+  // deliberately a plain flag, not better-auth's admin plugin's role/ban/impersonate
+  // system, which is unused here. `input: false` means it can only be set by direct
+  // DB access, never through better-auth's own update-user API — no self-promotion.
+  user: {
+    additionalFields: {
+      platformAdmin: {
+        type: "boolean",
+        required: false,
+        defaultValue: false,
+        input: false,
+      },
+    },
+  },
+
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url }) => {

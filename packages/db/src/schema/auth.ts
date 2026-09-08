@@ -12,6 +12,7 @@ export const user = pgTable("user", {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+  platformAdmin: boolean("platform_admin").default(false),
 });
 
 export const session = pgTable(

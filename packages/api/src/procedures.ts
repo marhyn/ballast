@@ -27,3 +27,14 @@ const requireOrganization = publicProcedure.middleware(async ({ context, next })
 
 /** Requires a signed-in User acting as an Organization (ADR-0003). */
 export const organizationProcedure = protectedProcedure.use(requireOrganization);
+
+// Built off `publicProcedure` for the same reason as `requireOrganization` above.
+const requireAdmin = publicProcedure.middleware(async ({ context, next }) => {
+  if (!context.user?.platformAdmin) {
+    throw new ORPCError("FORBIDDEN", { message: "Admin access required" });
+  }
+  return next({ context: { user: context.user } });
+});
+
+/** Requires a signed-in User with the platform-admin flag set (ADR-0011). */
+export const adminProcedure = protectedProcedure.use(requireAdmin);

@@ -27,3 +27,7 @@ _Avoid_: Tier, Package
 **Subscription**:
 An Organization's paid relationship with a Plan, mediated by a billing provider (Polar or Stripe, see ADR-0002) and persisted per-Organization. Carries the provider's own customer/subscription ids and the current billing status.
 _Avoid_: Customer (as a synonym — an Organization subscribes, not a "Customer" entity in this app's own domain)
+
+**Platform admin**:
+A User-level flag (`user.platformAdmin`, see ADR-0011) granting access to the `/admin` oversight pages across every Organization. Distinct from Member's per-Organization role (owner/admin/member) — a Platform admin isn't a member role, and a Member's `role` says nothing about platform-admin access.
+_Avoid_: Admin (ambiguous with a Member's "admin" role — always say "platform admin" or "Organization admin")

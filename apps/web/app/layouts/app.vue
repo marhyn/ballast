@@ -81,6 +81,9 @@ onMounted(() => {
           <DropdownMenuItem as-child>
             <NuxtLink to="/settings/billing">Billing</NuxtLink>
           </DropdownMenuItem>
+          <DropdownMenuItem v-if="session?.user.platformAdmin" as-child>
+            <NuxtLink to="/admin">Admin</NuxtLink>
+          </DropdownMenuItem>
           <DropdownMenuItem @click="signOut">Sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
