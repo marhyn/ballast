@@ -15,3 +15,7 @@ Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
 ### Page design
 
 New pages get designed on a Claude Design canvas and approved before any code is written. See `.claude/skills/design-a-page/SKILL.md`.
+
+### Bootstrap a new project
+
+Run once, right after cloning this template, before building any product pages: captures the business context, confirms the design system and billing provider, renames the codebase, and decides the fate of the `_example` reference code. See `.claude/skills/bootstrap-project/SKILL.md`.
