@@ -32,6 +32,12 @@ importers:
       '@ballast/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@ballast/billing':
+        specifier: workspace:*
+        version: link:../../packages/billing
+      '@ballast/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@lucide/vue':
         specifier: ^1.41.0
         version: 1.41.0(vue@3.5.42(typescript@5.9.3))
@@ -118,6 +124,9 @@ importers:
       '@types/node':
         specifier: ^22.10.0
         version: 22.20.1
+      standardwebhooks:
+        specifier: ^1.0.0
+        version: 1.1.1
       typescript:
         specifier: ^5.7.0
         version: 5.9.3

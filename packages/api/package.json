@@ -17,7 +17,8 @@
   "devDependencies": {
     "@ballast/config": "workspace:*",
     "typescript": "^5.7.0",
-    "@types/node": "^22.10.0"
+    "@types/node": "^22.10.0",
+    "standardwebhooks": "^1.0.0"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

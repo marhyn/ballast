@@ -11,6 +11,8 @@
   "dependencies": {
     "@ballast/api": "workspace:*",
     "@ballast/auth": "workspace:*",
+    "@ballast/billing": "workspace:*",
+    "@ballast/db": "workspace:*",
     "@lucide/vue": "^1.41.0",
     "@orpc/client": "^1.0.0",
     "@orpc/server": "^1.0.0",

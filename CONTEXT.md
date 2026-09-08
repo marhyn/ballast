@@ -19,3 +19,11 @@ _Avoid_: Account, Customer
 **Invitation**:
 A pending offer for a User (by email) to join an Organization with a given role.
 _Avoid_: Invite (as a noun for the record itself)
+
+**Plan**:
+A named, priced tier of features an Organization can subscribe to (e.g. Starter, Pro). Defined in code (`packages/billing/src/plans.ts`), not persisted — see ADR-0010.
+_Avoid_: Tier, Package
+
+**Subscription**:
+An Organization's paid relationship with a Plan, mediated by a billing provider (Polar or Stripe, see ADR-0002) and persisted per-Organization. Carries the provider's own customer/subscription ids and the current billing status.
+_Avoid_: Customer (as a synonym — an Organization subscribes, not a "Customer" entity in this app's own domain)

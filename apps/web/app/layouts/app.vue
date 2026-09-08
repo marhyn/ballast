@@ -78,6 +78,9 @@ onMounted(() => {
           <DropdownMenuItem as-child>
             <NuxtLink to="/settings/organization">Organization settings</NuxtLink>
           </DropdownMenuItem>
+          <DropdownMenuItem as-child>
+            <NuxtLink to="/settings/billing">Billing</NuxtLink>
+          </DropdownMenuItem>
           <DropdownMenuItem @click="signOut">Sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
