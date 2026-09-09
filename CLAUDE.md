@@ -18,4 +18,4 @@ New pages get designed on a Claude Design canvas and approved before any code is
 
 ### Bootstrap a new project
 
-Run once, right after cloning this template, before building any product pages: captures the business context, confirms the design system and billing provider, renames the codebase, and decides the fate of the `_example` reference code. See `.claude/skills/bootstrap-project/SKILL.md`.
+Run once, right after cloning this template, before building any product pages: captures the business context, confirms the design system and billing provider, checks whether Lettr/billing credentials are real yet (skippable, revisit anytime), renames the codebase, and decides the fate of the `_example` reference code. See `.claude/skills/bootstrap-project/SKILL.md`.

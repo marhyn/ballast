@@ -1,6 +1,6 @@
 ---
 name: bootstrap-project
-description: Turn this Ballast template clone into a real project — capture the business context, confirm or change the design system, rename the codebase, confirm the billing provider, decide whether to keep or delete the _example reference code, and hand off to setup-matt-pocock-skills. Run once, right after cloning the template, before building any product pages.
+description: Turn this Ballast template clone into a real project — capture the business context, confirm or change the design system, rename the codebase, confirm the billing provider, check whether Lettr/billing credentials are actually real yet (skippable, revisit anytime), decide whether to keep or delete the _example reference code, and hand off to setup-matt-pocock-skills. Run once, right after cloning the template, before building any product pages.
 disable-model-invocation: true
 ---
 
@@ -104,7 +104,37 @@ user can do. If they don't have them yet, leave the `REPLACE_WITH_...` placehold
 place with a comment that checkout will fail until they're filled in, rather than
 inventing plausible-looking IDs.
 
-## 5. The `_example` domain: keep or delete
+## 5. Verify integrations (skippable — safe to revisit anytime)
+
+Step 4 asked the user to fill in real credentials; this step actually checks whether they
+did, rather than trusting the reminder landed. Two things gate real functionality here,
+independent of each other:
+
+- **Lettr** (`LETTR_API_KEY` in `.env`) — every better-auth email goes through it:
+  password reset, email verification, organization invitations. None of these require it
+  to work for sign-up/sign-in/session/org-switching to work — those don't send email at
+  all — but without a real key, a user who clicks "forgot password" or gets invited to an
+  Organization never receives anything, even though the app behaves as if it worked.
+- **The active billing provider's credentials** (`POLAR_ACCESS_TOKEN`/
+  `POLAR_WEBHOOK_SECRET`, or `STRIPE_SECRET_KEY`/`STRIPE_WEBHOOK_SECRET`, whichever
+  `BILLING_PROVIDER` selects) and `packages/billing/src/plans.ts`'s `priceIds` — without
+  real values, checkout fails outright (a real error from the provider's API, not a silent
+  no-op — confirmed by actually clicking through it during marhyn/ballast#2's bootstrap
+  runs).
+
+Detect placeholders by pattern, not by calling the provider: empty, or still reading
+`dev-fake-...`, `change-me`, or the literal placeholder text `.env.example`/`plans.ts`
+shipped with — none of that has been replaced with something real yet.
+
+Tell the user plainly which of the two are still placeholders and what that breaks in
+practice (the two bullets above, in their own words) — don't just say "integrations
+incomplete." Then stop there: this is not a blocker on finishing bootstrap, and there's
+nothing to schedule or track. The check is only ever "read `.env` and `plans.ts` right
+now" — no state lives anywhere else, so filling in real values later and re-running this
+step (or asking to recheck integrations at any point, mid-project) picks up the change
+immediately with nothing else to update first.
+
+## 6. The `_example` domain: keep or delete
 
 `packages/db/src/schema/example.ts` and everything built on it (an oRPC domain service, a
 router, and the `/example` page) are a worked reference for the full pattern — schema →
@@ -126,7 +156,7 @@ Then run `pnpm db:generate` (creates the `DROP TABLE example_note` migration) fo
 `pnpm db:migrate`, and finish with `pnpm typecheck && pnpm lint && pnpm test` to confirm
 nothing still references the removed code.
 
-## 6. Hand off
+## 7. Hand off
 
 Once the above is settled, tell the user to run `/setup-matt-pocock-skills` next — it
 configures *this* project's own issue tracker, triage labels, and domain-doc layout (it
